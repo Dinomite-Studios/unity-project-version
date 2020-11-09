@@ -27,6 +27,7 @@ export class ProjectVersionService {
 
             return {
                 version: '',
+                revision: '',
                 versionWithRevision: '',
                 isAlpha: false,
                 isBeta: false,
@@ -44,15 +45,24 @@ export class ProjectVersionService {
             const split = content.split(':');
             let projectVersion = split[1].trim();
             let projectVersionWithRevision = '';
+            let revision = '';
 
             const revisionVersionIndex = projectVersion.indexOf('m_EditorVersionWithRevision');
             if (revisionVersionIndex > -1) {
                 projectVersion = projectVersion.substr(0, revisionVersionIndex).trim();
                 projectVersionWithRevision = split[split.length - 1].trim();
+
+                const revisionRegex : RegExp = /.*\((.*)\)/;
+                const revisionRegexResult = revisionRegex.exec(projectVersionWithRevision);
+
+                if (revisionRegexResult != null) {
+                    revision = revisionRegexResult[1];
+                }
             }
 
             return {
                 version: projectVersion,
+                revision: revision,
                 versionWithRevision: projectVersionWithRevision,
                 isAlpha: projectVersion.includes('a'),
                 isBeta: projectVersion.includes('b')
@@ -61,6 +71,7 @@ export class ProjectVersionService {
 
         return {
             version: '',
+            revision: '',
             versionWithRevision: '',
             isAlpha: false,
             isBeta: false,
