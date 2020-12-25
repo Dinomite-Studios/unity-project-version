@@ -28,7 +28,6 @@ export class ProjectVersionService {
             return {
                 version: '',
                 revision: '',
-                versionWithRevision: '',
                 isAlpha: false,
                 isBeta: false,
                 error: errorMessage
@@ -63,7 +62,6 @@ export class ProjectVersionService {
             return {
                 version: projectVersion,
                 revision: revision,
-                versionWithRevision: projectVersionWithRevision,
                 isAlpha: projectVersion.includes('a'),
                 isBeta: projectVersion.includes('b')
             }
@@ -72,7 +70,6 @@ export class ProjectVersionService {
         return {
             version: '',
             revision: '',
-            versionWithRevision: '',
             isAlpha: false,
             isBeta: false,
             error: 'Unknown project version format encountered.'

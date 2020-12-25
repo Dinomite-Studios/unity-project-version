@@ -14,11 +14,6 @@ export interface UnityProjectVersion {
     revision: string;
 
     /**
-     * Project version identifier with revision, e.g. 2019.3.5f1 (d691e07d38ef).
-     */
-    versionWithRevision: string;
-
-    /**
      * Is the project using a beta version of Unity?
      */
     isBeta: boolean;
