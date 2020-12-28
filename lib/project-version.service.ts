@@ -39,33 +39,42 @@ export class ProjectVersionService {
      * @param content The ProjectVersion.txt content to use for determining the project version.
      */
     public static determineProjectVersionFromContent(content: string): UnityProjectVersion {
-        if (content.includes('m_EditorVersion')) {
-            const split = content.split(':');
-            let projectVersion = split[1].trim();
+        if (content && content !== '') {
+            let version = '';
+            let revision = '';
+            let isAlpha = false;
+            let isBeta = false;
 
-            const revisionVersionIndex = projectVersion.indexOf('m_EditorVersionWithRevision');
-            if (revisionVersionIndex > -1) {
-                projectVersion = projectVersion.substr(0, revisionVersionIndex).trim();
-                const projectVersionWithRevision = split[split.length - 1].trim();
-
-                const revisionRegex: RegExp = /.*\((.*)\)/;
-                const revisionRegexResult = revisionRegex.exec(projectVersionWithRevision);
-
-                if (revisionRegexResult != null) {
-                    return {
-                        version: projectVersion,
-                        revision: revisionRegexResult[1],
-                        isAlpha: projectVersion.includes('a'),
-                        isBeta: projectVersion.includes('b')
+            const lines = content.split('\n');
+            lines.forEach(line => {
+                const keyValue = line.split(':');
+                if (keyValue[0] === 'm_EditorVersion') {
+                    version = keyValue[1].trim();
+                    isAlpha = version.includes('a');
+                    isBeta = version.includes('b');
+                } else if (keyValue[0] === 'm_EditorVersionWithRevision') {
+                    const revisionRegex: RegExp = /.*\((.*)\)/;
+                    const revisionRegexResult = revisionRegex.exec(keyValue[1]);
+                    if (revisionRegexResult) {
+                        revision = revisionRegexResult[1];
                     }
                 }
+            });
+
+            if (revision) {
+                return {
+                    version: version,
+                    revision: revision,
+                    isAlpha: isAlpha,
+                    isBeta: isBeta
+                };
             }
 
             return {
-                version: projectVersion,
-                isAlpha: projectVersion.includes('a'),
-                isBeta: projectVersion.includes('b')
-            }
+                version: version,
+                isAlpha: isAlpha,
+                isBeta: isBeta
+            };
         }
 
         return {
