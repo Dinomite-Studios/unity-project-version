@@ -1,20 +1,31 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+  - job:
+    displayName: 'Build, Test and Publish'
+    pool:
+      vmImage: 'ubuntu-latest'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'Run npm install and build'
+    - script: |
+        npm install
+        npm run build
+      displayName: 'Run npm install and build'
 
-- script: |
-    npm run test
-  displayName: 'Run tests'
+    - script: |
+        npm run test
+      displayName: 'Run tests'
+    
+    - script: |
+        npm install -g npm-cli-login
+      displayName: 'Install NPM login utility'
+    
+    - script: |
+        npm-cli-login -u $(NPM_USERNAME) -p $(NPM_PASSWORD) -e $(NPM_EMAIL)
+      displayName: 'Login to public NPM registry'
