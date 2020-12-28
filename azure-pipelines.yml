@@ -1,7 +1,6 @@
 trigger:
 - main
 - development
-- feature/*
 
 jobs:
   - job:
