@@ -27,7 +27,6 @@ export class ProjectVersionService {
 
             return {
                 version: '',
-                revision: '',
                 isAlpha: false,
                 isBeta: false,
                 error: errorMessage
@@ -43,25 +42,27 @@ export class ProjectVersionService {
         if (content.includes('m_EditorVersion')) {
             const split = content.split(':');
             let projectVersion = split[1].trim();
-            let projectVersionWithRevision = '';
-            let revision = '';
 
             const revisionVersionIndex = projectVersion.indexOf('m_EditorVersionWithRevision');
             if (revisionVersionIndex > -1) {
                 projectVersion = projectVersion.substr(0, revisionVersionIndex).trim();
-                projectVersionWithRevision = split[split.length - 1].trim();
+                const projectVersionWithRevision = split[split.length - 1].trim();
 
-                const revisionRegex : RegExp = /.*\((.*)\)/;
+                const revisionRegex: RegExp = /.*\((.*)\)/;
                 const revisionRegexResult = revisionRegex.exec(projectVersionWithRevision);
 
                 if (revisionRegexResult != null) {
-                    revision = revisionRegexResult[1];
+                    return {
+                        version: projectVersion,
+                        revision: revisionRegexResult[1],
+                        isAlpha: projectVersion.includes('a'),
+                        isBeta: projectVersion.includes('b')
+                    }
                 }
             }
 
             return {
                 version: projectVersion,
-                revision: revision,
                 isAlpha: projectVersion.includes('a'),
                 isBeta: projectVersion.includes('b')
             }
@@ -69,7 +70,6 @@ export class ProjectVersionService {
 
         return {
             version: '',
-            revision: '',
             isAlpha: false,
             isBeta: false,
             error: 'Unknown project version format encountered.'

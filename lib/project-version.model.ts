@@ -9,9 +9,9 @@ export interface UnityProjectVersion {
     version: string;
 
     /**
-     * Project version revision, e.g. d691e07d38ef.
+     * Project version revision if available, e.g. d691e07d38ef.
      */
-    revision: string;
+    revision?: string;
 
     /**
      * Is the project using a beta version of Unity?
