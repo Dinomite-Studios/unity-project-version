@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed `versionWithRevision`field since it can easily be retrieved now using the new `revision` field introduced in v1.1
 - Updated dependencies
 
+### Fixed
+
+- Fixed case where project version failed to be found if standard assets are used in the project
+
 ## [1.1.0]
 
 ### Added
