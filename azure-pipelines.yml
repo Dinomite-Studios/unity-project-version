@@ -1,5 +1,6 @@
 trigger:
 - main
+- development
 
 jobs:
   - job:
@@ -28,11 +29,14 @@ jobs:
     - script: |
         npm install -g npm-cli-login
       displayName: 'Install NPM login utility'
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     
     - script: |
         npm-cli-login -u $(npm.username) -p $(npm.password) -e $(npm.email)
       displayName: 'Login to public NPM registry'
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     
     - script: |
         npm run publish
       displayName: 'Publish'
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
