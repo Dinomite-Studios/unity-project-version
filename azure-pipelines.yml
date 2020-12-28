@@ -6,6 +6,9 @@ jobs:
     displayName: 'Build, Test and Publish'
     pool:
       vmImage: 'ubuntu-latest'
+    
+    variables:
+      - group: 'npm-public-registry-user'
 
     steps:
     - task: NodeTool@0
