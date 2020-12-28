@@ -32,3 +32,7 @@ jobs:
     - script: |
         npm-cli-login -u $(npm.username) -p $(npm.password) -e $(npm.email)
       displayName: 'Login to public NPM registry'
+    
+    - script: |
+        npm run publish
+      displayName: 'Publish'
