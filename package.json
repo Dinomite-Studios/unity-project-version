@@ -1,7 +1,7 @@
 {
     "name": "@dinomite-studios/unity-project-version",
-    "version": "1.1.2",
-    "description": "Utility package for determining a project's Unity editor version.",
+    "version": "1.1.3",
+    "description": "A collection of utilities useful when working with Unity 3D based projects in DevOps, e.g. when creating CI/CD pipelines.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
@@ -13,26 +13,24 @@
         "unity",
         "version",
         "project",
-        "devops"
+        "devops",
+        "packages"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/Dinomite-Studios/unity-azure-pipelines-tasks"
+        "url": "https://github.com/Dinomite-Studios/unity-project-version"
     },
     "bugs": {
-        "url": "https://github.com/Dinomite-Studios/unity-azure-pipelines-tasks/issues"
+        "url": "https://github.com/Dinomite-Studios/unity-project-version/issues"
     },
-    "homepage": "https://dinomite-studios.github.io/unity-azure-pipelines-tasks/",
+    "homepage": "https://github.com/Dinomite-Studios/unity-project-version",
     "author": "Dinomite Studios",
     "license": "MIT",
-    "dependencies": {
-        "fs-extra": "^8.1.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@types/chai": "^4.2.14",
-        "@types/fs-extra": "^9.0.6",
         "@types/mocha": "^8.2.0",
-        "@types/node": "^14.14.16",
+        "@types/node": "^14.14.19",
         "chai": "^4.2.0",
         "mocha": "^8.2.1",
         "ts-node": "^9.1.1",

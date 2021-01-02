@@ -1,5 +1,5 @@
 import path = require('path');
-import fs = require('fs-extra');
+import fs = require('fs');
 import { UnityProjectVersion } from './project-version.model';
 
 export class ProjectVersionService {
@@ -11,10 +11,10 @@ export class ProjectVersionService {
      * Gets a Unity project's Unity editor version by looking up the project version file in the project directory.
      * @param projectRootPath Relative path to the Unity project's root folder containing the assets folder, starting from the current working directory.
      */
-    public static async determineProjectVersionFromFile(projectRootPath: string): Promise<UnityProjectVersion> {
+    public static determineProjectVersionFromFile(projectRootPath: string): UnityProjectVersion {
         try {
             const projectVersionFilePath = path.join(projectRootPath, ProjectVersionService.projectSettingsFolder, ProjectVersionService.projectVersionFile);
-            const projectVersionFileContent = await fs.readFile(projectVersionFilePath, { encoding: 'utf8' });
+            const projectVersionFileContent = fs.readFileSync(projectVersionFilePath, { encoding: 'utf8' });
             const projectVersion = this.determineProjectVersionFromContent(projectVersionFileContent);
 
             return projectVersion;
