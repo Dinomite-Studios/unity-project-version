@@ -5,16 +5,28 @@ import { UnityProjectVersion } from '../lib/project-version.model';
 
 describe('ProjectVersionService.determineProjectVersionFromContent ',
     () => {
-        it('empty string should return error', () => {
-            const result = ProjectVersionService.determineProjectVersionFromContent('');
+        it('Invalid file path should return error', () => {
+            const result = ProjectVersionService.determineProjectVersionFromFile('XYZ:\\This\\Path\\Does\\Not\\Exist');
+
+            expect(result.error !== undefined).to.equal(true);
+        });
+
+        it('Test ProjectVersion.txt should return 2020.2.0f1 (3721df5a8b28) stable', () => {
+            const result = ProjectVersionService.determineProjectVersionFromFile(__dirname);
             const expectedResult: UnityProjectVersion = {
-                version: '',
+                version: '2020.2.0f1',
+                revision: '3721df5a8b28',
                 isAlpha: false,
-                isBeta: false,
-                error: 'Unknown project version format encountered.'
+                isBeta: false
             };
 
             expect(resultsAreEqual(result, expectedResult)).to.equal(true);
+        });
+
+        it('empty string should return error', () => {
+            const result = ProjectVersionService.determineProjectVersionFromContent('');
+
+            expect(result.error !== undefined).to.equal(true);
         });
 
         it('should return 2017.1.0f1 stable', () => {
